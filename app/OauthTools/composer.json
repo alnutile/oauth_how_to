@@ -1,0 +1,17 @@
+{
+    "name": "alfred-nutile-inc/oauth-tools",
+    "description": "Tools to help with Oauth",
+    "keywords": ["oauth"],
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "php": ">=5.5.9",
+        "ramsey/uuid": "~2.8",
+        "lucadegasperi/oauth2-server-laravel": "5.0.*@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "AlfredNutileInc\\OauthTools\\": "app/OauthTools/src/"
+        }
+    }
+}
