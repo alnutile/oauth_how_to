@@ -1,0 +1,169 @@
+{
+	"id": "2d299f91-42ba-b3d2-c297-185a48358b79",
+	"name": "Oauth Try #2 ",
+	"description": "",
+	"order": [
+		"17db4879-408e-a4f4-aa9a-978ddb85dad7",
+		"c707861c-7ec9-9543-97ab-168a9506b2c7",
+		"94beee33-74d5-b30e-e428-2a72a7c1e69b"
+	],
+	"folders": [],
+	"timestamp": 1439517703279,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "17db4879-408e-a4f4-aa9a-978ddb85dad7",
+			"headers": "Accept-Encoding: \n",
+			"url": "http://localhost:8181/oauth/access_token",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "client_id",
+					"value": "33591b34-03c2-4ece-a763-d531aee0298a",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "client_secret",
+					"value": "RLx0Jr3JqEyuiuE0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "grant_type",
+					"value": "password",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "username",
+					"value": "admin@foo.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "gK6uobObca7QJJin",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1439518642939,
+			"name": "Get Token",
+			"description": "",
+			"collectionId": "2d299f91-42ba-b3d2-c297-185a48358b79",
+			"responses": []
+		},
+		{
+			"id": "94beee33-74d5-b30e-e428-2a72a7c1e69b",
+			"headers": "Accept-Encoding: \n",
+			"url": "http://localhost:8181/oauth/access_token",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"collectionId": "2d299f91-42ba-b3d2-c297-185a48358b79",
+			"data": [
+				{
+					"key": "client_id",
+					"value": "33591b34-03c2-4ece-a763-d531aee0298a",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "client_secret",
+					"value": "RLx0Jr3JqEyuiuE0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "grant_type",
+					"value": "client_credentials",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "username",
+					"value": "admin@foo.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "gK6uobObca7QJJin",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Get Token Client Based",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1439519219075,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "c707861c-7ec9-9543-97ab-168a9506b2c7",
+			"headers": "Accept-Encoding: \n",
+			"url": "http://localhost:8181/test?access_token=ib1dIFQPzYC9hAsqXvO5nlxOKtnGcl9TAnKhZEVD",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "2d299f91-42ba-b3d2-c297-185a48358b79",
+			"data": [
+				{
+					"key": "client_id",
+					"value": "6bdfc82a-1ba1-40f4-a8ee-d1452e8b742f",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "client_secret",
+					"value": "WMTZpWwWHJ0IinL6",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "grant_type",
+					"value": "password",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "username",
+					"value": "admin@foo.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "f2ogLRVapf9fjMhF",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Token Test",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1439518604238,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}
