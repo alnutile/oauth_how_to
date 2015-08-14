@@ -1,27 +1,115 @@
-## Laravel PHP Framework
+# Laravel 5.1 and Oauth2 Server
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+Video coming soon...
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Example repo is here https://github.com/alnutile/oauth_how_to
 
-## Official Documentation
+The library we will use is 
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+https://github.com/lucadegasperi/oauth2-server-laravel
 
-## Contributing
+This will setup a server both client_type and password_type for Grant Types.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+# Coming to Terms with Oauth
 
-## Security Vulnerabilities
+Coming to terms with this stuff is long and tedious.
+The docs are here https://github.com/lucadegasperi/oauth2-server-laravel/wiki will help and then these lead to the League docs as well http://oauth2.thephpleague.com/ 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+There is also a podcast interview with the Alex Bilbie who made the League Oauth Library http://fullstackradio.com/episodes/4/
 
-### License
+What I will cover is mainly the instalation going beyond the docs above into the details of getting this thing going. I will also provide a "play" repo for you to review.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+## Base Laravel Install 
+
+Install laravel as normal, install the library as normal. You will see some extra stuff I have in the repo for helping out as well (this will be seen in the video too)
+
+`app/OauthTools`
+
+Some commands to use artisan to make users, tokens etc.
+
+So in the end my `app/Console/Kernel.php` looked like https://github.com/alnutile/oauth_how_to/blob/master/app/Console/Kernel.php
+
+So I could easily do
+
+~~~
+php artisan oauth-tools:adduser admin@foo.com
+~~~
+
+![](https://dl.dropboxusercontent.com/s/4oz4yn8p8gxftt2/make_user_oauth.png?dl=0)
+
+or 
+
+~~~
+php artisan oauth-tools:generate-token 33591b34-03c2-4ece-a763-d531aee0298a admin@foo.com client
+~~~
+
+Also note [composer.json](https://github.com/alnutile/oauth_how_to/blob/master/composer.json) I use a uuid library to help with these commands etc.
+
+
+Finally to have all of this work out of the box with the Postman file I shared run it this way for now
+
+~~~
+cd public
+php -S localhost:8181
+~~~
+
+The database for this example is sqlite so
+
+~~~
+touch storage/database.sqlite
+php artisan migrate:refresh --seed
+~~~
+
+And you should now have a db and migrations
+
+Since it is sqlite just rm the file and touch it again to re-migrate and save your self the headache of DBAL driver etc since this just just a quick working demo.
+
+## Setup your oauth config
+
+`config/oauth2.php` file as seen [here](https://github.com/alnutile/oauth_how_to/blob/master/config/oauth2.php) **BUT** only if you want these. And my `access_token_ttl` is way too big so see the defaults in the docs. Also note it points to [OauthPasswordVerifier](https://github.com/alnutile/oauth_how_to/blob/master/app/OauthPasswordVerifier.php) which the docs talk about as well.
+
+## Route
+
+As noted you add the code to your route 
+
+~~~
+Route::post('oauth/access_token', function() {
+    return Response::json(Authorizer::issueAccessToken());
+});
+
+
+Route::get('test', ['middleware' => 'oauth', function() {
+    return Response::json("Welcome");
+}]);
+~~~
+
+Later on you will see this instead
+
+~~~
+Route::post('oauth/access_token', function() {
+    return Response::json(Authorizer::issueAccessToken());
+});
+
+
+Route::get('test', ['middleware' => 'oauthOrAuth', function() {
+    return Response::json("Welcome");
+}]);
+~~~
+
+With the **oauthOrAuth** I will explain that in the video as well. But basically and api endpoint can be used by a local session based user and a remote application using oauth. It is just how our APIs go.
+
+So this lets that work just fine.
+
+## Postman 
+
+Just to show it all working you will see in the video me using postman. You will see that in the repo [here](https://github.com/alnutile/oauth_how_to/blob/master/oauth_try_2.json.postman_collection)
+
+
+## Now What
+
+Between the links above and Postman you have a working 
+
+![](https://dl.dropboxusercontent.com/s/bbt0fmfflm2zq7x/oauth_token.gif?dl=0)
+
+
